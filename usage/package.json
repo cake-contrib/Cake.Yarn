@@ -1,0 +1,13 @@
+{
+  "name": "cake.yarn",
+  "version": "0.1.0",
+  "description": "changing working directory for tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "hello": "echo \"Hello from cake-yarn inside another directory!\" ",
+    "arguments": "echo Arguments are appended onto the script command like so: "
+  },
+  "author": "",
+  "license": "MIT"
+}

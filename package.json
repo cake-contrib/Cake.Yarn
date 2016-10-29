@@ -1,0 +1,16 @@
+{
+  "name": "cake.yarn",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "hello": "echo \"Hello from cake-yarn!\" ",
+    "arguments": "echo Arguments are appended onto the script command like so: "
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
+}
