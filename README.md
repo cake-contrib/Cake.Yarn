@@ -1,5 +1,7 @@
 # cake-yarn
 
+[![NuGet](https://img.shields.io/nuget/v/Cake.Yarn.svg)](https://www.nuget.org/packages/Cake.Yarn/) [![Build status](https://ci.appveyor.com/api/projects/status/dch44vu64cs7nb98?svg=true)](https://ci.appveyor.com/project/MilovanovM/cake-yarn)
+
 ## Usage
 
 ```c#
