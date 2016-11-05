@@ -45,7 +45,7 @@ namespace Cake.Yarn
         /// Task("Yarn-Add-Gulp")
         ///     .Does(() =>
         /// {
-        ///     Yarn.Add(settings => settings.Package("package"));
+        ///     Yarn.Add(settings => settings.Package("gulp"));
         /// });
         /// ]]>
         /// </code>
@@ -56,7 +56,7 @@ namespace Cake.Yarn
         /// Task("Yarn-Add-Gulp")
         ///     .Does(() =>
         /// {
-        ///     Yarn.Add(settings => settings.Package("package").Globally());
+        ///     Yarn.Add(settings => settings.Package("gulp").Globally());
         /// });
         /// ]]>
         /// </code>

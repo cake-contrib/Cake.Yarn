@@ -59,6 +59,28 @@ namespace Cake.Yarn
         /// execute 'yarn install' with options
         /// </summary>
         /// <param name="configure">options when running 'yarn install'</param>
+        /// <example>
+        /// <para>Run 'yarn install'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-FromPath")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.FromPath("./dir-with-packagejson").Install();
+        /// });
+        /// ]]>
+        /// </code>
+        /// <para>Run 'yarn install'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Install")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Install();
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
         public IYarnRunnerCommands Install(Action<YarnInstallSettings> configure = null)
         {
             var settings = new YarnInstallSettings();
@@ -80,10 +102,33 @@ namespace Cake.Yarn
         #endregion
 
         #region yarn add
+
         /// <summary>
         /// execute 'yarn add' with options
         /// </summary>
         /// <param name="configure">options when running 'yarn install'</param>
+        /// <example>
+        /// <para>Run 'yarn add gulp'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Add-Gulp")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Add(settings => settings.Package("gulp"));
+        /// });
+        /// ]]>
+        /// </code>
+        /// <para>Run 'yarn global add gulp'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Add-Gulp")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Add(settings => settings.Package("gulp").Globally());
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
         public IYarnRunnerCommands Add(Action<YarnAddSettings> configure = null)
         {
             var settings = new YarnAddSettings();
@@ -115,6 +160,18 @@ namespace Cake.Yarn
         /// </summary>
         /// <param name="scriptName">name of the </param>
         /// <param name="configure"></param>
+        /// <example>
+        /// <para>Run 'yarn run hello'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Run")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Run("hello");
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
         public IYarnRunnerCommands RunScript(string scriptName, Action<YarnRunSettings> configure = null)
         {
             var settings = new YarnRunSettings(scriptName);
