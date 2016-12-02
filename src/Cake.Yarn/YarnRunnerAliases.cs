@@ -67,7 +67,7 @@ namespace Cake.Yarn
         /// Task("Yarn-Run")
         ///     .Does(() =>
         /// {
-        ///     Yarn.Run("hello");
+        ///     Yarn.RunScript("hello");
         /// });
         /// ]]>
         /// </code>
