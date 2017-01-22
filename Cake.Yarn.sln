@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E310D9BA-BCDF-4C6A-97AF-C2F072FBFE94}"
 	ProjectSection(SolutionItems) = preProject
 		cake.config = cake.config
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global

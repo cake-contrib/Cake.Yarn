@@ -26,10 +26,10 @@
             // Yarn.FromPath(DirectoryPath).
 
             // yarn global add gulp (from path ./wwwroot)
-            Yarn.FromPath("./wwwroot").Install(settings => settings.Package("gulp").Globally());
+            Yarn.FromPath("./wwwroot").Add(settings => settings.Package("gulp").Globally());
 
             // yarn add gulp (from parent path)
-            Yarn.FromPath("../").Install(settings => settings.Package("gulp"));
+            Yarn.FromPath("../").Add(settings => settings.Package("gulp"));
         });
 
     Task("Yarn-RunScript")
