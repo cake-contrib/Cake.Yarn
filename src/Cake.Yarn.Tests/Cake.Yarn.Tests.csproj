@@ -69,6 +69,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="YarnCacheFixture.cs" />
+    <Compile Include="YarnCacheTests.cs" />
+    <Compile Include="YarnRemoveFixture.cs" />
+    <Compile Include="YarnRemoveTests.cs" />
     <Compile Include="YarnRunScriptFixture.cs" />
     <Compile Include="YarnAddFixture.cs" />
     <Compile Include="YarnInstallFixture.cs" />

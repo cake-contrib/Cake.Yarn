@@ -153,6 +153,58 @@ namespace Cake.Yarn
 
         #endregion
 
+        #region yarn remove
+
+        /// <summary>
+        /// execute 'yarn add' with options
+        /// </summary>
+        /// <param name="configure">options when running 'yarn install'</param>
+        /// <example>
+        /// <para>Run 'yarn remove gulp'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Remove-Gulp")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Remove(settings => settings.Package("gulp"));
+        /// });
+        /// ]]>
+        /// </code>
+        /// <para>Run 'yarn global remove gulp'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-remove-Gulp")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Remove(settings => settings.Package("gulp").Globally());
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        public IYarnRunnerCommands Remove(Action<YarnRemoveSettings> configure = null)
+        {
+            var settings = new YarnRemoveSettings();
+            configure?.Invoke(settings);
+
+            var args = GetYarnRemoveArguments(settings);
+
+            Run(settings, args);
+            return this;
+        }
+
+        private static ProcessArgumentBuilder GetYarnRemoveArguments(YarnRemoveSettings settings)
+        {
+            var args = new ProcessArgumentBuilder();
+            if (settings != null && settings.Global)
+            {
+                args.Append("global");
+            }
+            settings?.Evaluate(args);
+            return args;
+        }
+
+        #endregion
+
         #region yarn run
 
         /// <summary>
@@ -183,6 +235,44 @@ namespace Cake.Yarn
         }
 
         private static ProcessArgumentBuilder GetYarnRunArguments(YarnRunSettings settings)
+        {
+            var args = new ProcessArgumentBuilder();
+            settings?.Evaluate(args);
+            return args;
+        }
+
+        #endregion
+
+        #region yarn cache
+
+        /// <summary>
+        /// execute 'yarn run' with arguments
+        /// </summary>
+        /// <param name="subCommand">subcommand of cache to run </param>
+        /// <param name="configure"></param>
+        /// <example>
+        /// <para>Run 'yarn cache clean'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Clean")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Cache("clean");
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        public IYarnRunnerCommands Cache(string subCommand, Action<YarnCacheSettings> configure = null)
+        {
+            var settings = new YarnCacheSettings(subCommand);
+            configure?.Invoke(settings);
+            var args = GetYarnCacheArguments(settings);
+
+            Run(settings, args);
+            return this;
+        }
+
+        private static ProcessArgumentBuilder GetYarnCacheArguments(YarnCacheSettings settings)
         {
             var args = new ProcessArgumentBuilder();
             settings?.Evaluate(args);
