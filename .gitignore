@@ -253,3 +253,4 @@ _Pvt_Extensions
 /*.nupkg
 
 yarn.lock
+*.tgz
