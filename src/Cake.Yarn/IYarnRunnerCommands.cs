@@ -25,5 +25,11 @@ namespace Cake.Yarn
         /// <param name="scriptName">name of the </param>
         /// <param name="configure">options when running 'yarn run'</param>
         IYarnRunnerCommands RunScript(string scriptName, Action<YarnRunSettings> configure = null);
+
+        /// <summary>
+        /// execute 'yarn pack' with options
+        /// </summary>
+        /// <param name="packSettings">options when running 'yarn pack'</param>
+        IYarnRunnerCommands Pack(Action<YarnPackSettings> packSettings = null);
     }
 }

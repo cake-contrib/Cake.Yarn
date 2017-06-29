@@ -37,6 +37,12 @@
         {
             Yarn.RunScript("test");
         });
+
+    Task("Yarn-Pack")
+        .Does(() =>
+        {
+            Yarn.Pack();
+        });
 ```
 
 ## Scope
@@ -46,6 +52,7 @@ Cake.Yarn currently supports the following yarn commands:
 * ```yarn install```
 * ```yarn add```
 * ```yarn run```
+* ```yarn pack```
 
 My primary goal for the project is to support the build workflow I need as a .NET developer, additional features have been contributed
 
