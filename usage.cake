@@ -19,6 +19,9 @@ Task("Default")
 
         // run yarn in another directory
         Yarn.FromPath("./usage").Install().RunScript("hello");
+
+        // run yarn pack
+        Yarn.Pack();
     });
         
 //////////////////////////////////////////////////////////////////////

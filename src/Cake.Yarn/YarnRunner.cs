@@ -151,6 +151,51 @@ namespace Cake.Yarn
             return args;
         }
 
+        /// <summary>
+        /// execute 'yarn pack' with options
+        /// </summary>
+        /// <param name="packSettings">options when running 'yarn pack'</param>
+        /// <example>
+        /// <para>Run 'yarn pack'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Pack")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Pack();
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <example>
+        /// <para>Run 'yarn pack --filename filename'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Pack")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Pack(settings => settings.Named("Filename"));
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        public IYarnRunnerCommands Pack(Action<YarnPackSettings> packSettings = null)
+        {
+            var settings = new YarnPackSettings();
+            packSettings?.Invoke(settings);
+            var args = GetYarnPackArguments(settings);
+
+            Run(settings, args);
+
+            return this;
+        }
+
+        private static ProcessArgumentBuilder GetYarnPackArguments(YarnPackSettings settings)
+        {
+            var args = new ProcessArgumentBuilder();
+            settings?.Evaluate(args);
+            return args;
+        }
         #endregion
 
         #region yarn remove

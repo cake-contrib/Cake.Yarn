@@ -38,6 +38,17 @@ namespace Cake.Yarn
         /// });
         /// ]]>
         /// </code>
+        /// <para>Run 'yarn pack'</para>
+        /// <para>Cake task:</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Pack")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Pack();
+        /// });
+        /// ]]>
+        /// </code>
         /// <para>Run 'yarn add gulp'</para>
         /// <para>Cake task:</para>
         /// <code>

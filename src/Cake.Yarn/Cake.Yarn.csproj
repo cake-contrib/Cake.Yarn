@@ -51,6 +51,7 @@
     <Compile Include="YarnAddSettings.cs" />
     <Compile Include="YarnCacheSettings.cs" />
     <Compile Include="YarnRemoveSettings.cs" />
+    <Compile Include="YarnPackSettings.cs" />
     <Compile Include="YarnRunSettings.cs" />
     <Compile Include="YarnInstallSettings.cs" />
     <Compile Include="YarnRunner.cs" />
