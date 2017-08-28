@@ -8,6 +8,8 @@ namespace Cake.Yarn
     /// </summary>
     public class YarnInstallSettings : YarnRunnerSettings
     {
+        private bool _explicitProductionFlag;
+
         /// <summary>
         /// Yarn "install" settings
         /// </summary>
@@ -21,9 +23,10 @@ namespace Cake.Yarn
         /// <param name="args"></param>
         protected override void EvaluateCore(ProcessArgumentBuilder args)
         {
-            if (Production)
+            if (_explicitProductionFlag)
             {
-                args.Append("--production");
+                string flag = Production ? "true" : "false";
+                args.Append("--production=" + flag);
             }
 
             if (IgnorePlatform)
@@ -44,6 +47,7 @@ namespace Cake.Yarn
         /// <returns></returns>
         public YarnInstallSettings ForProduction(bool enabled = true)
         {
+            _explicitProductionFlag = true;
             Production = enabled;
             return this;
         }

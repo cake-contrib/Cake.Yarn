@@ -23,13 +23,23 @@ namespace Cake.Yarn.Tests
         }
 
         [Fact]
-        public void Packages_And_ForProduction_Settings_Specified_Should_Use_Throw_ArgumentException()
+        public void Install_And_ForProduction_Settings_Specified_Should_Use_Correct_Argument_Provided_In_YarnInstallSettings()
         {
             _fixture.InstallSettings = s => s.ForProduction();
 
             var result = _fixture.Run();
 
-            result.Args.ShouldBe("install --production");
+            result.Args.ShouldBe("install --production=true");
+        }
+
+        [Fact]
+        public void Install_And_ForProduction_False_Settings_Specified_Should_Use_Correct_Argument_Provided_In_YarnInstallSettings()
+        {
+            _fixture.InstallSettings = s => s.ForProduction(false);
+
+            var result = _fixture.Run();
+
+            result.Args.ShouldBe("install --production=false");
         }
 
         [Fact]
