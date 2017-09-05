@@ -80,6 +80,8 @@
     <Compile Include="YarnAddTests.cs" />
     <Compile Include="YarnInstallTests.cs" />
     <Compile Include="YarnRunScriptTests.cs" />
+    <Compile Include="YarnVersionFixture.cs" />
+    <Compile Include="YarnVersionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

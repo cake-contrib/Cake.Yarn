@@ -43,6 +43,16 @@
         {
             Yarn.Pack();
         });
+
+    Task("Yarn-Version")
+        .Does(() =>
+        {
+            // yarn version
+            Yarn.Version();
+
+            // yarn version --new-version 0.1.0
+            Yarn.Version(settings => settings.SetVersion("0.1.0"));
+        });
 ```
 
 ## Scope
@@ -53,6 +63,7 @@ Cake.Yarn currently supports the following yarn commands:
 * ```yarn add```
 * ```yarn run```
 * ```yarn pack```
+* ```yarn version```
 
 My primary goal for the project is to support the build workflow I need as a .NET developer, additional features have been contributed
 
