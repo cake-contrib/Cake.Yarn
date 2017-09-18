@@ -22,6 +22,9 @@ Task("Default")
 
         // run yarn pack
         Yarn.Pack();
+
+        // run yarn version
+        Yarn.Version(settings => settings.DisableGitTagCreation());
     });
         
 //////////////////////////////////////////////////////////////////////

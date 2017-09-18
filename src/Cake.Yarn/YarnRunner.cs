@@ -326,6 +326,67 @@ namespace Cake.Yarn
 
         #endregion
 
+        #region yarn version
+
+        /// <summary>
+        /// execute 'yarn version' with options
+        /// </summary>
+        /// <param name="versionSettings">options when running 'yarn version'</param>
+        /// <example>
+        /// <para>Run 'yarn version'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Version")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Version();
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <example>
+        /// <para>Run 'yarn version --new-version 0.1.0'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Set-Version")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Version(settings => settings.SetVersion("0.1.0"));
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <example>
+        /// <para>Run 'yarn version --no-git-tag-version'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Version")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Version(settings => settings.DisableGitTagCreation());
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        public IYarnRunnerCommands Version(Action<YarnVersionSettings> versionSettings = null)
+        {
+            var settings = new YarnVersionSettings();
+            versionSettings?.Invoke(settings);
+            var args = GetYarnVersionArguments(settings);
+
+            Run(settings, args);
+
+            return this;
+        }
+
+        private static ProcessArgumentBuilder GetYarnVersionArguments(YarnVersionSettings settings)
+        {
+            var args = new ProcessArgumentBuilder();
+            settings?.Evaluate(args);
+            return args;
+        }
+        #endregion
+
         /// <summary>
         /// Gets the name of the tool
         /// </summary>

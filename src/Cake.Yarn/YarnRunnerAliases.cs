@@ -82,6 +82,17 @@ namespace Cake.Yarn
         /// });
         /// ]]>
         /// </code>
+        /// <para>Run 'yarn version'</para>
+        /// <para>Cake task:</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Version")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Version();
+        /// });
+        /// ]]>
+        /// </code>
         /// </example>
         [CakePropertyAlias]
         public static YarnRunner Yarn(this ICakeContext context)
