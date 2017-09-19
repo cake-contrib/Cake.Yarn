@@ -31,5 +31,11 @@ namespace Cake.Yarn
         /// </summary>
         /// <param name="packSettings">options when running 'yarn pack'</param>
         IYarnRunnerCommands Pack(Action<YarnPackSettings> packSettings = null);
+
+        /// <summary>
+        /// execute 'yarn version' with options
+        /// </summary>
+        /// <param name="versionSettings">options when running 'yarn version'</param>
+        IYarnRunnerCommands Version(Action<YarnVersionSettings> versionSettings = null);
     }
 }
