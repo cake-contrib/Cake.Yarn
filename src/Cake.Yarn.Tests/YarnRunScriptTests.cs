@@ -32,7 +32,7 @@ namespace Cake.Yarn.Tests
 			_fixture.RunScriptSettings = s => s.WithArgument("-param");
 
 			var result = _fixture.Run();
-			result.Args.ShouldBe("run build -- -param");
+			result.Args.ShouldBe("run build -param");
 		}
 
 		[Fact]
@@ -40,7 +40,7 @@ namespace Cake.Yarn.Tests
 		{
 			_fixture.RunScriptSettings = s => s.WithArgument("-param").WithArgument("-default");
 			var result = _fixture.Run();
-			result.Args.ShouldBe("run build -- -param -default");
+			result.Args.ShouldBe("run build -param -default");
 		}
 
 		[Fact]
@@ -57,7 +57,7 @@ namespace Cake.Yarn.Tests
 			_fixture.ScriptName = "build";
 			_fixture.RunScriptSettings = s => s.WithArgument("-param").WithArgument("-default");
 			var result = _fixture.Run();
-			result.Args.ShouldBe("run build -- -param -default");
+			result.Args.ShouldBe("run build -param -default");
 		}
     }
 }
