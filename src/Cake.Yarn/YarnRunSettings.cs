@@ -52,7 +52,6 @@ namespace Cake.Yarn
 
             if (Arguments.Any())
             {
-                args.Append("--");
                 foreach (var arg in Arguments)
                 {
                     args.Append(arg);
