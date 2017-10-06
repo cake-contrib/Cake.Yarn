@@ -6,14 +6,14 @@ using Cake.Core.IO;
 namespace Cake.Yarn
 {
     /// <summary>
-    /// Yarn add options
+    /// Yarn remove options
     /// </summary>
     public class YarnRemoveSettings : YarnRunnerSettings
     {
         private readonly ISet<string> _packages = new HashSet<string>();
 
         /// <summary>
-        /// Yarn "add" settings
+        /// Yarn "remove" settings
         /// </summary>
         public YarnRemoveSettings() : base("remove")
         {
@@ -32,7 +32,7 @@ namespace Cake.Yarn
         }
 
         /// <summary>
-        /// Install a package from the given url
+        /// Remove a package by the given url
         /// </summary>
         /// <param name="url">Url to directory containing package.json (see yarn docs)</param>
         /// <returns></returns>
@@ -48,7 +48,7 @@ namespace Cake.Yarn
         }
 
         /// <summary>
-        /// install a package by name, with optional version/tag and scope
+        /// remove a package by name, with optional version/tag and scope
         /// </summary>
         /// <param name="package"></param>
         /// <param name="versionOrTag"></param>

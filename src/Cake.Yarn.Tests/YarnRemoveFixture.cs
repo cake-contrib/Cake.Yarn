@@ -9,12 +9,12 @@ namespace Cake.Yarn.Tests
         {
         }
 
-        public Action<YarnRemoveSettings> AddSettings { get; set; }
+        public Action<YarnRemoveSettings> RemoveSettings { get; set; }
 
         protected override void RunTool()
         {
             var tool = new YarnRunner(FileSystem, Environment, ProcessRunner, Tools);
-            tool.Remove(AddSettings);
+            tool.Remove(RemoveSettings);
         }
     }
 }

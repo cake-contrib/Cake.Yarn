@@ -151,6 +151,10 @@ namespace Cake.Yarn
             return args;
         }
 
+        #endregion
+
+        #region yarn pack
+
         /// <summary>
         /// execute 'yarn pack' with options
         /// </summary>
@@ -201,9 +205,9 @@ namespace Cake.Yarn
         #region yarn remove
 
         /// <summary>
-        /// execute 'yarn add' with options
+        /// execute 'yarn remove' with options
         /// </summary>
-        /// <param name="configure">options when running 'yarn install'</param>
+        /// <param name="configure">options when running 'yarn remove'</param>
         /// <example>
         /// <para>Run 'yarn remove gulp'</para>
         /// <code>
@@ -255,7 +259,7 @@ namespace Cake.Yarn
         /// <summary>
         /// execute 'yarn run' with arguments
         /// </summary>
-        /// <param name="scriptName">name of the </param>
+        /// <param name="scriptName">name of the script to run</param>
         /// <param name="configure"></param>
         /// <example>
         /// <para>Run 'yarn run hello'</para>
@@ -291,7 +295,7 @@ namespace Cake.Yarn
         #region yarn cache
 
         /// <summary>
-        /// execute 'yarn run' with arguments
+        /// execute 'yarn cache' with arguments
         /// </summary>
         /// <param name="subCommand">subcommand of cache to run </param>
         /// <param name="configure"></param>
