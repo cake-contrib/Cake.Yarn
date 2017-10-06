@@ -67,6 +67,8 @@ Cake.Yarn currently supports the following yarn commands:
 * ```yarn run```
 * ```yarn pack```
 * ```yarn version```
+* ```yarn cache```
+* ```yarn remove```
 
 My primary goal for the project is to support the build workflow I need as a .NET developer, additional features have been contributed
 

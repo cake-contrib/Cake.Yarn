@@ -16,19 +16,17 @@ namespace Cake.Yarn
         {
         }
 
-
         /// <summary>
-        /// yarn 'run' settings for the named script
+        /// yarn 'cache' settings for the named script
         /// </summary>
-        /// <param name="command">script name to execute</param>
+        /// <param name="command">command name to execute</param>
         public YarnCacheSettings(string command) : base("cache")
         {
             SubCommand = command;
         }
 
-
         /// <summary>
-        /// Name of the script to execute as defined in package.json
+        /// Name of the command to execute
         /// </summary>
         public string SubCommand { get; set; } = string.Empty;
 

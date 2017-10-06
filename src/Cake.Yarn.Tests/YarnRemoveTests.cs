@@ -18,7 +18,7 @@ namespace Cake.Yarn.Tests
         [InlineData("https://www.npmjs.com/package/mylib")]
         public void Package_Settings_Specified_Should_Use_Correct_Arguments(string package)
         {
-            _fixture.AddSettings = s => s.Package(package);
+            _fixture.RemoveSettings = s => s.Package(package);
 
             var result = _fixture.Run();
 
@@ -28,7 +28,7 @@ namespace Cake.Yarn.Tests
         [Fact]
         public void Package_With_Tag_Settings_Specified_Should_Use_Correct_Arguments()
         {
-            _fixture.AddSettings = s => s.Package("any package", ">1.0 && <1.5");
+            _fixture.RemoveSettings = s => s.Package("any package", ">1.0 && <1.5");
 
             var result = _fixture.Run();
 
@@ -38,7 +38,7 @@ namespace Cake.Yarn.Tests
         [Fact]
         public void Package_With_Tag_And_Scope_Settings_Specified_Should_Use_Correct_Arguments()
         {
-            _fixture.AddSettings = s => s.Package("any package", ">1.0 && <1.5", "@scope");
+            _fixture.RemoveSettings = s => s.Package("any package", ">1.0 && <1.5", "@scope");
 
             var result = _fixture.Run();
 
@@ -48,7 +48,7 @@ namespace Cake.Yarn.Tests
         [Fact]
         public void Package_With_Tag_And_Invalid_Scope_Settings_Specified_Should_Throw_ArgumentException()
         {
-            _fixture.AddSettings = s => s.Package("any package", ">1.0 && <1.5", "scope");
+            _fixture.RemoveSettings = s => s.Package("any package", ">1.0 && <1.5", "scope");
 
             Action run = () => _fixture.Run();
 
@@ -60,7 +60,7 @@ namespace Cake.Yarn.Tests
         [InlineData("https://www.npmjs.com/package/mylib")]
         public void Package_And_Globally_Settings_Specified_Should_Use_Correct_Arguments(string package)
         {
-            _fixture.AddSettings = s => s.Package(package).Globally();
+            _fixture.RemoveSettings = s => s.Package(package).Globally();
 
             var result = _fixture.Run();
 
