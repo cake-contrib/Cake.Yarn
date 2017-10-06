@@ -1,6 +1,6 @@
 {
   "name": "cake.yarn",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "changing working directory for tool",
   "main": "index.js",
   "scripts": {
