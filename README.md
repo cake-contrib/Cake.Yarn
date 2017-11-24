@@ -17,14 +17,17 @@
             Yarn.Add(settings => settings.Package("gulp").Globally());
 
             // yarn add gulp
-            Yarn.Add(settings => settings.Package("gulp"));
+            Yarn.Add(settings => settings.Package("gulp"));            
         });
 
     Task("Yarn-FromPath")
         .Does(() =>
         {
-            // Yarn.FromPath(DirectoryPath).
-
+            // Yarn.FromPath(DirectoryPath);
+            
+            // yarn install from path
+            Yarn.FromPath("./wwwroot").Install();
+            
             // yarn global add gulp (from path ./wwwroot)
             Yarn.FromPath("./wwwroot").Add(settings => settings.Package("gulp").Globally());
 
