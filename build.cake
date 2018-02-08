@@ -55,14 +55,13 @@ Task("Build")
     .IsDependentOn("Restore-NuGet-Packages")
     .Does(() =>
 {
-    MSBuild(solutionPath, settings => settings
-        .WithProperty("TreatWarningsAsErrors","true")
-        .WithProperty("UseSharedCompilation", "false")
-        .WithProperty("AutoParameterizationWebConfigConnectionStrings", "false")
-        .SetVerbosity(Verbosity.Quiet)
-        .SetConfiguration(configuration)
-        .WithTarget("Rebuild")
-    );
+    var settings = new DotNetCoreBuildSettings
+    {
+        Framework = "netstandard2.0",
+        Configuration = "Release"
+    };
+
+    DotNetCoreBuild("./src/Cake.Yarn/Cake.Yarn.csproj", settings);
 });
 
 Task("Copy-Files")
