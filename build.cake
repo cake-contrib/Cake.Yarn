@@ -1,5 +1,3 @@
-#tool "xunit.runner.console"
-
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
@@ -11,13 +9,13 @@ var configuration = Argument("configuration", "Release");
 // PREPARATION
 //////////////////////////////////////////////////////////////////////
 
-var solutionPath            = MakeAbsolute(File(Argument("solutionPath", "Cake.Yarn.sln")));
+var solutionPath            = MakeAbsolute(File(Argument("solutionPath", "./src/Cake.Yarn.sln")));
 var projectName             = Argument("projectName", "Cake.Yarn");
 
 var artifacts               = MakeAbsolute(Directory(Argument("artifactPath", "./artifacts")));
 var testResultsPath         = MakeAbsolute(Directory(artifacts + "./test-results"));
 var testAssemblies          = new List<FilePath> { 
-                                MakeAbsolute(File("./src/Cake.Yarn.Tests/bin/" + configuration + "/Cake.Yarn.Tests.dll"))
+                                MakeAbsolute(File("./src/Cake.Yarn.Tests/bin/" + configuration + "/netcoreapp2.0/Cake.Yarn.Tests.dll"))
                               };
 
 SolutionParserResult solution        = null;
@@ -82,32 +80,37 @@ Task("Package")
     .IsDependentOn("Copy-Files")
     .Does(() =>
 {
+    Information("Packing...");
     CreateDirectory(Directory(artifacts + "/packages"));
+    var settings = new DotNetCorePackSettings
+    {
+        Configuration = "Release",
+        OutputDirectory = Directory(artifacts + "/packages")
+    };
 
-    var nuspec = project.Path.GetDirectory() + "/" + project.Name + ".nuspec";
-    Information("Packing: {0}", nuspec);
-    NuGetPack(nuspec, new NuGetPackSettings {
-        BasePath = artifacts + "/build",
-        NoPackageAnalysis = false,
-        OutputDirectory = Directory(artifacts + "/packages"),
-        Properties = new Dictionary<string, string>() { { "Configuration", configuration } }
-    });
+    DotNetCorePack("./src/Cake.Yarn/Cake.Yarn.csproj", settings);
 });
 
 Task("Run-Unit-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    CreateDirectory(testResultsPath);
-
-    var settings = new XUnit2Settings {
-        XmlReportV1 = true,
-        NoAppDomain = true,
-        OutputDirectory = testResultsPath,
-    };
-    settings.ExcludeTrait("Category", "Integration");
+    var projectFiles = GetFiles("./src/**/*.Tests.csproj");
+    foreach(var file in projectFiles)
+    {
+        DotNetCoreTest(file.FullPath);
+    }
     
-    XUnit2(testAssemblies, settings);
+    // CreateDirectory(testResultsPath);
+
+    // var settings = new XUnit2Settings {
+    //     XmlReportV1 = true,
+    //     NoAppDomain = true,
+    //     OutputDirectory = testResultsPath,
+    // };
+    // settings.ExcludeTrait("Category", "Integration");
+    
+    // XUnit2(testAssemblies, settings);
 });
 
 //////////////////////////////////////////////////////////////////////

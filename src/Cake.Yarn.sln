@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Yarn", "Cake.Yarn\Cake.Yarn.csproj", "{099E83AD-D5F8-44DA-B0BF-08A734E556BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Yarn.Tests", "Cake.Yarn.Tests\Cake.Yarn.Tests.csproj", "{D44F5F67-E78C-4872-9EDE-757E6BD6F74D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{099E83AD-D5F8-44DA-B0BF-08A734E556BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{099E83AD-D5F8-44DA-B0BF-08A734E556BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{099E83AD-D5F8-44DA-B0BF-08A734E556BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{099E83AD-D5F8-44DA-B0BF-08A734E556BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D44F5F67-E78C-4872-9EDE-757E6BD6F74D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D44F5F67-E78C-4872-9EDE-757E6BD6F74D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D44F5F67-E78C-4872-9EDE-757E6BD6F74D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D44F5F67-E78C-4872-9EDE-757E6BD6F74D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

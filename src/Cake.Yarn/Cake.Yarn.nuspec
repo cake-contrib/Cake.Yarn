@@ -11,10 +11,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A set of aliases for Cake to help with running Yarn (node package manager from Facebook) commands</description>
     <tags>Cake Script Build Yarn</tags>
-    <version>0.3.6</version>
+    <version>0.4.0</version>
   </metadata>
-  <files>
-    <file src="..\..\artifacts\build\Cake.Yarn.xml" target="lib\net45" />
-    <file src="..\..\artifacts\build\Cake.Yarn.dll" target="lib\net45" />
-  </files>
 </package>

@@ -1,10 +1,5 @@
-version: '{build}'
-os: Visual Studio 2015
-init:
-- cmd: git config --global core.autocrlf true
-cache: 
-- packages -> src\**\packages.config
-- tools -> tools\packages.config
+version: 1.0.{build}
+image: Visual Studio 2015
 build_script:
-- ps: .\build.ps1 -Target "Default" -Verbosity "Normal" -Configuration "Release"
+- cmd: PowerShell -Version 2.0 .\build.ps1
 test: off
