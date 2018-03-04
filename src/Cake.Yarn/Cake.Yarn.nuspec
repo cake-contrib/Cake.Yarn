@@ -11,6 +11,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A set of aliases for Cake to help with running Yarn (node package manager from Facebook) commands</description>
     <tags>Cake Script Build Yarn</tags>
-    <version>0.4.0</version>
+    <version>0.4.0-beta</version>
   </metadata>
 </package>
