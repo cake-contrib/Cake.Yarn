@@ -6,6 +6,6 @@
     <Authors>Maxim Milovanov</Authors>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cake.Core" Version="0.25.0" />
+    <PackageReference Include="Cake.Core" Version="0.26.1" />
   </ItemGroup>
 </Project>
