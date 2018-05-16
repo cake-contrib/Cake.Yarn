@@ -59,5 +59,15 @@ namespace Cake.Yarn.Tests
 			var result = _fixture.Run();
 			result.Args.ShouldBe("run build -param -default");
 		}
+
+		[Fact]
+		public void Named_Script_With_Silent_Should_Insert_Args_Correctly()
+		{
+			_fixture.ScriptName = "build";
+			_fixture.RunScriptSettings = s => s.WithArgument("-param").WithArgument("-default").WithSilent();
+			var result = _fixture.Run();
+			result.Args.ShouldBe("run --silent build -param -default");
+		}
+		
     }
 }
