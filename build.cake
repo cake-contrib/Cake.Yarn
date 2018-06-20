@@ -1,127 +1,139 @@
-#tool "xunit.runner.console"
+/*
+ * Load additional cake addins
+ */
+#addin Cake.Git&version=0.17.0
 
-//////////////////////////////////////////////////////////////////////
-// ARGUMENTS
-//////////////////////////////////////////////////////////////////////
+/*
+ * Load additional tools
+ */
+#tool xunit.runner.console&version=2.3.1
+#tool GitVersion.CommandLine&version=3.6.5
 
-var target = Argument("target", "Default");
-var configuration = Argument("configuration", "Release");
+/*
+ * Commandline argument handling
+ */
+string target = Argument("target", "Default");
+string configuration = Argument("configuration", "Release");
 
-//////////////////////////////////////////////////////////////////////
-// PREPARATION
-//////////////////////////////////////////////////////////////////////
+/*
+ * Constants, initial variables
+ */
+string projectName = "Cake.Yarn";
+string testProjectName = "Cake.Yarn.Tests";
+FilePath project = $"./src/{projectName}/{projectName}.csproj";
+FilePath testProject = $"./src/{testProjectName}/{testProjectName}.csproj";
+DirectoryPath artifacts = "./artifacts";
+GitVersion version = GitVersion();
 
-var solutionPath            = MakeAbsolute(File(Argument("solutionPath", "Cake.Yarn.sln")));
-var projectName             = Argument("projectName", "Cake.Yarn");
+/*
+ * Helper: GetReleaseNotes
+ *
+ * Parses the git commits since the last tag to render some release notes
+ * that will be taken into account when publishing the repository.
+ */
+string[] GetReleaseNotes()
+{
+	IEnumerable<string> changes;
+	string tag;
 
-var artifacts               = MakeAbsolute(Directory(Argument("artifactPath", "./artifacts")));
-var testResultsPath         = MakeAbsolute(Directory(artifacts + "./test-results"));
-var testAssemblies          = new List<FilePath> { 
-                                MakeAbsolute(File("./src/Cake.Yarn.Tests/bin/" + configuration + "/Cake.Yarn.Tests.dll"))
-                              };
+	try
+	{
+		tag = GitDescribe(".", "HEAD~1", false, GitDescribeStrategy.Tags, 0);
+	}
+	catch(Exception)
+	{
+		return new string[0];
+	}
 
-SolutionParserResult solution        = null;
-SolutionProject project              = null;
+	string commitRange = tag + "..HEAD";
 
-//////////////////////////////////////////////////////////////////////
-// TASKS
-//////////////////////////////////////////////////////////////////////
+	StartProcess("git", new ProcessSettings
+	{
+		RedirectStandardOutput = true,
+		Silent = true,
+		Arguments = $"log {commitRange} --no-merges --format=\"[%h] %s\""
+	}, out changes);
 
-Setup(ctx => {
-    CreateDirectory(artifacts);
-    
-    if(!FileExists(solutionPath)) throw new Exception(string.Format("Solution file not found - {0}", solutionPath.ToString()));
-    solution = ParseSolution(solutionPath.ToString());
-    project = solution.Projects.FirstOrDefault(x => x.Name == projectName);
-    if(project == null || !FileExists(project.Path)) throw new Exception(string.Format("Project not found in solution - {0}", projectName));
-});
+	return changes.ToArray();
+}
 
+/*
+ * Task: Clean
+ */
 Task("Clean")
-    .Does(() =>
-{
-    CleanDirectory(artifacts);
-    var binDirs = GetDirectories(solutionPath.GetDirectory() + @"\src\**\bin");
-    var objDirs = GetDirectories(solutionPath.GetDirectory() + @"\src\**\obj");
-    CleanDirectories(binDirs);
-    CleanDirectories(objDirs);
+	.Does(() =>
+{	
+	CleanDirectories($"./src/**/bin/{configuration}");
+	CleanDirectories("./src/**/obj");
+	CleanDirectory(artifacts);
 });
 
-Task("Restore-NuGet-Packages")
-    .IsDependentOn("Clean")
-    .Does(() =>
+/*
+ * Task: Restore
+ */
+Task("Restore")
+	.Does(() =>
 {
-    NuGetRestore(solutionPath, new NuGetRestoreSettings());
+	DotNetCoreRestore(testProject.FullPath);
 });
 
+/*
+ * Task: Build
+ */
 Task("Build")
-    .IsDependentOn("Restore-NuGet-Packages")
-    .Does(() =>
+	.IsDependentOn("Clean")
+	.Does(() =>
 {
-    MSBuild(solutionPath, settings => settings
-        .WithProperty("TreatWarningsAsErrors","true")
-        .WithProperty("UseSharedCompilation", "false")
-        .WithProperty("AutoParameterizationWebConfigConnectionStrings", "false")
-        .SetVerbosity(Verbosity.Quiet)
-        .SetConfiguration(configuration)
-        .WithTarget("Rebuild")
-    );
+	DotNetCoreBuild(project.FullPath, new DotNetCoreBuildSettings {
+		Configuration = configuration
+	});
 });
 
-Task("Copy-Files")
-    .IsDependentOn("Build")
-    .Does(() => 
+
+/*
+ * Task: Test
+ */
+Task("Test")
+	.IsDependentOn("Clean")
+	.IsDependentOn("Restore")
+	.Does(() =>
 {
-    CreateDirectory(artifacts + "/build");
-    var files = GetFiles(project.Path.GetDirectory() + "/bin/" + configuration + "/" + project.Name + ".*");
-    CopyFiles(files, artifacts +"/build");
+	DotNetCoreTest(testProject.FullPath);
 });
 
-Task("Package")
-    .IsDependentOn("Clean")
-    .IsDependentOn("Restore-NuGet-Packages")
-    .IsDependentOn("Copy-Files")
-    .Does(() =>
+/*
+ * Task: Pack
+ */
+Task("Pack")
+	.IsDependentOn("Clean")
+	.IsDependentOn("Build")
+	.IsDependentOn("Test")
+	.Does (() =>
 {
-    CreateDirectory(Directory(artifacts + "/packages"));
+	var nugetDirectory = artifacts.Combine("nuget");
 
-    var nuspec = project.Path.GetDirectory() + "/" + project.Name + ".nuspec";
-    Information("Packing: {0}", nuspec);
-    NuGetPack(nuspec, new NuGetPackSettings {
-        BasePath = artifacts + "/build",
-        NoPackageAnalysis = false,
-        OutputDirectory = Directory(artifacts + "/packages"),
-        Properties = new Dictionary<string, string>() { { "Configuration", configuration } }
-    });
+	EnsureDirectoryExists(nugetDirectory);
+
+	DotNetCorePack(project.FullPath, new DotNetCorePackSettings {
+		Configuration = configuration,
+		IncludeSymbols = true,
+		NoBuild = true,
+		OutputDirectory = nugetDirectory,
+		ArgumentCustomization = args =>
+		{
+			return args
+				.Append($"/p:PackageVersion={version.NuGetVersion}")
+				.AppendQuoted("/p:PackageReleaseNotes=" + string.Join("\n", GetReleaseNotes()));
+		}
+	});
 });
 
-Task("Run-Unit-Tests")
-    .IsDependentOn("Build")
-    .Does(() =>
-{
-    CreateDirectory(testResultsPath);
+/*
+ * Task: Default
+ */
+Task("Default").IsDependentOn("Pack");
 
-    var settings = new XUnit2Settings {
-        XmlReportV1 = true,
-        NoAppDomain = true,
-        OutputDirectory = testResultsPath,
-    };
-    settings.ExcludeTrait("Category", "Integration");
-    
-    XUnit2(testAssemblies, settings);
-});
-
-//////////////////////////////////////////////////////////////////////
-// TASK TARGETS
-//////////////////////////////////////////////////////////////////////
-
-Task("Default")
-    .IsDependentOn("Build")
-    .IsDependentOn("Copy-Files")
-    .IsDependentOn("Run-Unit-Tests")
-    .IsDependentOn("Package");
-
-//////////////////////////////////////////////////////////////////////
-// EXECUTION
-//////////////////////////////////////////////////////////////////////
-
+/*
+ * Script Execution
+ */
 RunTarget(target);
