@@ -72,7 +72,7 @@ namespace Cake.Yarn.Tests
 
             var result = _fixture.Run();
 
-            result.Args.ShouldBe("install --ignore-platform --ignore-engines --ignore-optional");
+            result.Args.ShouldBe("install --ignore-platform --ignore-optional --ignore-engines");
         }
     }
 }
