@@ -38,6 +38,11 @@ namespace Cake.Yarn
             {
                 args.Append("--ignore-optional");
             }
+
+            if (IgnoreEngines)
+            {
+                args.Append("--ignore-engines");
+            }
         }
 
         /// <summary>
@@ -75,6 +80,17 @@ namespace Cake.Yarn
         }
 
         /// <summary>
+        /// Applies the --ignore-engines parameter
+        /// </summary>
+        /// <param name="enabled"></param>
+        /// <returns></returns>
+        public YarnInstallSettings IgnoreEnginesWarnings(bool enabled = true)
+        {
+            IgnoreEngines = enabled;
+            return this;
+        }
+
+        /// <summary>
         /// --production
         /// </summary>
         public bool Production { get; internal set; }
@@ -88,5 +104,10 @@ namespace Cake.Yarn
         /// --ignore-optional
         /// </summary>
         public bool IgnoreOptional { get; internal set; }
+
+        /// <summary>
+        /// --ignore-engines
+        /// </summary>
+        public bool IgnoreEngines { get; internal set; }
     }
 }
