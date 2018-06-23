@@ -53,15 +53,26 @@ namespace Cake.Yarn.Tests
         }
 
         [Fact]
+        public void Install_Settings_IgnoreEnginesWarnings_Should_Use_Correct_Argument_Provided_In_YarnInstallSettings()
+        {
+            _fixture.InstallSettings = s => s.IgnoreEnginesWarnings();
+
+            var result = _fixture.Run();
+
+            result.Args.ShouldBe("install --ignore-engines");
+        }
+
+        [Fact]
         public void Several_Install_Settings_Should_Use_Correct_Argument_Provided_In_YarnInstallSettings()
         {
             _fixture.InstallSettings = s =>
                 s.IgnorePlatformWarnings()
+                .IgnoreEnginesWarnings()
                 .IgnoreOptionalWarnings();
 
             var result = _fixture.Run();
 
-            result.Args.ShouldBe("install --ignore-platform --ignore-optional");
+            result.Args.ShouldBe("install --ignore-platform --ignore-optional --ignore-engines");
         }
     }
 }
