@@ -38,6 +38,11 @@ namespace Cake.Yarn
         public string ScriptName { get; set; } = string.Empty;
 
         /// <summary>
+        /// Skip Yarn console logs, other types of logs (script output) will be printed
+        /// </summary>
+        public bool Silent { get; set; }
+
+        /// <summary>
         /// Evaluate options
         /// </summary>
         /// <param name="args"></param>
@@ -46,6 +51,11 @@ namespace Cake.Yarn
             if (string.IsNullOrEmpty(ScriptName))
             {
                 throw new ArgumentNullException(nameof(ScriptName), "You must provide a script name!");
+            }
+
+            if (Silent)
+            {
+                args.Append(@"--silent");
             }
 
             args.Append(ScriptName);
@@ -69,6 +79,15 @@ namespace Cake.Yarn
         public YarnRunSettings WithArgument(string arg)
         {
             Arguments.Add(arg);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets Silent property to true
+        /// </summary>
+        public YarnRunSettings WithSilent()
+        {
+            Silent = true;
             return this;
         }
     }
