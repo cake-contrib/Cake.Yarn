@@ -43,6 +43,11 @@ namespace Cake.Yarn
             {
                 args.Append("--ignore-engines");
             }
+
+            if (FrozenLockfile)
+            {
+                args.Append("--frozen-lockfile");
+            }
         }
 
         /// <summary>
@@ -91,6 +96,17 @@ namespace Cake.Yarn
         }
 
         /// <summary>
+        /// Applies the --frozen-lockfile parameter
+        /// </summary>
+        /// <param name="enabled"></param>
+        /// <returns></returns>
+        public YarnInstallSettings WithFrozenLockfile(bool enabled = true)
+        {
+            FrozenLockfile = enabled;
+            return this;
+        }
+
+        /// <summary>
         /// --production
         /// </summary>
         public bool Production { get; internal set; }
@@ -109,5 +125,10 @@ namespace Cake.Yarn
         /// --ignore-engines
         /// </summary>
         public bool IgnoreEngines { get; internal set; }
+
+        /// <summary>
+        /// --frozen-lockfile
+        /// </summary>
+        public bool FrozenLockfile { get; internal set; }
     }
 }
