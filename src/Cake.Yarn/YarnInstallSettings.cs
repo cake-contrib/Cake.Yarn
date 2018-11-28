@@ -48,13 +48,17 @@ namespace Cake.Yarn
             {
                 args.Append("--frozen-lockfile");
             }
+
+            if (OfflineInstall)
+            {
+                args.Append("--offline");
+            }
         }
 
         /// <summary>
         /// Applies the --production parameter (can not be set when installing individual packages
         /// </summary>
-        /// <param name="enabled"></param>
-        /// <returns></returns>
+        /// <param name="enabled">The value of the explicitely set production parameter</param>
         public YarnInstallSettings ForProduction(bool enabled = true)
         {
             _explicitProductionFlag = true;
@@ -65,8 +69,7 @@ namespace Cake.Yarn
         /// <summary>
         /// Applies the --ignore-platform parameter
         /// </summary>
-        /// <param name="enabled"></param>
-        /// <returns></returns>
+        /// <param name="enabled"><c>true</c> to apply the parameter</param>
         public YarnInstallSettings IgnorePlatformWarnings(bool enabled = true)
         {
             IgnorePlatform = enabled;
@@ -76,8 +79,7 @@ namespace Cake.Yarn
         /// <summary>
         /// Applies the --ignore-optional parameter
         /// </summary>
-        /// <param name="enabled"></param>
-        /// <returns></returns>
+        /// <param name="enabled"><c>true</c> to apply the parameter</param>
         public YarnInstallSettings IgnoreOptionalWarnings(bool enabled = true)
         {
             IgnoreOptional = enabled;
@@ -87,8 +89,7 @@ namespace Cake.Yarn
         /// <summary>
         /// Applies the --ignore-engines parameter
         /// </summary>
-        /// <param name="enabled"></param>
-        /// <returns></returns>
+        /// <param name="enabled"><c>true</c> to apply the parameter</param>
         public YarnInstallSettings IgnoreEnginesWarnings(bool enabled = true)
         {
             IgnoreEngines = enabled;
@@ -98,11 +99,20 @@ namespace Cake.Yarn
         /// <summary>
         /// Applies the --frozen-lockfile parameter
         /// </summary>
-        /// <param name="enabled"></param>
-        /// <returns></returns>
+        /// <param name="enabled"><c>true</c> to apply the parameter</param>
         public YarnInstallSettings WithFrozenLockfile(bool enabled = true)
         {
             FrozenLockfile = enabled;
+            return this;
+        }
+
+        /// <summary>
+        /// Applies the --offline parameter
+        /// </summary>
+        /// <param name="enabled"><c>true</c> to apply the parameter</param>
+        public YarnInstallSettings Offline(bool enabled = true)
+        {
+            OfflineInstall = enabled;
             return this;
         }
 
@@ -130,5 +140,10 @@ namespace Cake.Yarn
         /// --frozen-lockfile
         /// </summary>
         public bool FrozenLockfile { get; internal set; }
+
+        /// <summary>
+        /// --offline
+        /// </summary>
+        public bool OfflineInstall { get; internal set; }
     }
 }

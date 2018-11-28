@@ -73,16 +73,27 @@ namespace Cake.Yarn.Tests
         }
 
         [Fact]
+        public void Install_Settings_OfflineInstall_Should_Use_Correct_Argument_Provided_In_YarnInstallSettings()
+        {
+            _fixture.InstallSettings = s => s.Offline();
+
+            var result = _fixture.Run();
+
+            result.Args.ShouldBe("install --offline");
+        }
+
+        [Fact]
         public void Several_Install_Settings_Should_Use_Correct_Argument_Provided_In_YarnInstallSettings()
         {
             _fixture.InstallSettings = s =>
                 s.IgnorePlatformWarnings()
                 .IgnoreEnginesWarnings()
-                .IgnoreOptionalWarnings();
+                .IgnoreOptionalWarnings()
+                .Offline();
 
             var result = _fixture.Run();
 
-            result.Args.ShouldBe("install --ignore-platform --ignore-optional --ignore-engines");
+            result.Args.ShouldBe("install --ignore-platform --ignore-optional --ignore-engines --offline");
         }
     }
 }
