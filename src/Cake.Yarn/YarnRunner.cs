@@ -389,6 +389,69 @@ namespace Cake.Yarn
             settings?.Evaluate(args);
             return args;
         }
+
+        #endregion
+
+        #region yarn audit
+
+        /// <summary>
+        /// execute 'yarn audit' with options
+        /// </summary>
+        /// <param name="auditSettings">options when running 'yarn audit'</param>
+        /// <example>
+        /// <para>Run 'yarn audit'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Audit")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Audit();
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <example>
+        /// <para>Run 'yarn audit --verbose'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Set-Verbose")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Audit(settings => settings.SetVerbose());
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <example>
+        /// <para>Run 'yarn audit --json'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Set-Json")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Audit(settings => settings.SetJson());
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        public IYarnRunnerCommands Audit(Action<YarnAuditSettings> auditSettings = null)
+        {
+            var settings = new YarnAuditSettings();
+            auditSettings?.Invoke(settings);
+            var args = GetYarnAuditArguments(settings);
+
+            Run(settings, args);
+            return this;
+
+        }
+
+        private static ProcessArgumentBuilder GetYarnAuditArguments(YarnAuditSettings settings)
+        {
+            var args = new ProcessArgumentBuilder();
+            settings?.Evaluate(args);
+            return args;
+        }
+
         #endregion
 
         /// <summary>
