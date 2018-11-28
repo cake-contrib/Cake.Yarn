@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Cake.Core;
 using Cake.Core.IO;
 
@@ -9,6 +11,7 @@ namespace Cake.Yarn
     public class YarnInstallSettings : YarnRunnerSettings
     {
         private bool _explicitProductionFlag;
+        private readonly IList<string> _arguments = new List<string>();
 
         /// <summary>
         /// Yarn "install" settings
@@ -52,6 +55,11 @@ namespace Cake.Yarn
             if (OfflineInstall)
             {
                 args.Append("--offline");
+            }
+
+            foreach (var arg in _arguments)
+            {
+                args.Append(arg);
             }
         }
 
@@ -117,6 +125,16 @@ namespace Cake.Yarn
         }
 
         /// <summary>
+        /// Apply any individual argument.
+        /// </summary>
+        /// <param name="arg">The individual argument to use.</param>
+        public YarnInstallSettings WithArgument(string arg)
+        {
+            _arguments.Add(arg);
+            return this;
+        }
+
+        /// <summary>
         /// --production
         /// </summary>
         public bool Production { get; internal set; }
@@ -145,5 +163,10 @@ namespace Cake.Yarn
         /// --offline
         /// </summary>
         public bool OfflineInstall { get; internal set; }
+
+        /// <summary>
+        /// Arguments to pass to the target script
+        /// </summary>
+        public IReadOnlyCollection<string> Arguments => new ReadOnlyCollection<string>(_arguments);
     }
 }
