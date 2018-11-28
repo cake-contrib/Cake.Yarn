@@ -37,5 +37,12 @@ namespace Cake.Yarn
         /// </summary>
         /// <param name="versionSettings">options when running 'yarn version'</param>
         IYarnRunnerCommands Version(Action<YarnVersionSettings> versionSettings = null);
+
+        /// <summary>
+        /// execute 'yarn audit' with options
+        /// </summary>
+        /// <param name="auditSettings">options when running 'yarn audit'</param>
+        /// <returns></returns>
+        IYarnRunnerCommands Audit(Action<YarnAuditSettings> auditSettings = null);
     }
 }
