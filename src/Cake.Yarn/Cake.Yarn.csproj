@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Core" Version="0.30.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Core" Version="0.32.1" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
