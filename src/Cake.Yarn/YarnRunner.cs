@@ -27,6 +27,7 @@ namespace Cake.Yarn
     {
         private readonly IFileSystem _fileSystem;
         private DirectoryPath _workingDirectoryPath;
+        private readonly ICakePlatform _platform;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="YarnRunner" /> class.
@@ -40,6 +41,7 @@ namespace Cake.Yarn
             : base(fileSystem, environment, processRunner, toolLocator)
         {
             _fileSystem = fileSystem;
+            _platform = environment.Platform;
         }
 
         /// <summary>
@@ -530,8 +532,7 @@ namespace Cake.Yarn
         /// <returns>The tool executable name</returns>
         protected override IEnumerable<string> GetToolExecutableNames()
         {
-            yield return "yarn.cmd";
-            yield return "yarn";
+            yield return _platform.IsUnix() ? "yarn" : "yarn.cmd";
         }
 
         /// <summary>
