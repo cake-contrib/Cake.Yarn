@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Cake.Core;
+﻿using Cake.Core;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Cake.Yarn
 {
@@ -446,6 +446,67 @@ namespace Cake.Yarn
         }
 
         private static ProcessArgumentBuilder GetYarnAuditArguments(YarnAuditSettings settings)
+        {
+            var args = new ProcessArgumentBuilder();
+            settings?.Evaluate(args);
+            return args;
+        }
+
+        #endregion
+
+        #region yarn publish
+
+        /// <summary>
+        /// execute 'yarn publish' with options
+        /// </summary>
+        /// <param name="publishSettings">options when running 'yarn publish'</param>
+        /// <example>
+        /// <para>Run 'yarn publish'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Publish")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Publish();
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <example>
+        /// <para>Run 'yarn publish --new-version 1.2.3'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Publish-With-New-Version")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Publish(settings => settings.NewVersion(1, 2, 3));
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <example>
+        /// <para>Run 'yarn publish --tag beta'</para>
+        /// <code>
+        /// <![CDATA[
+        /// Task("Yarn-Publish-With-Tag")
+        ///     .Does(() =>
+        /// {
+        ///     Yarn.Publish(settings => settings.Tag("beta"));
+        /// });
+        /// ]]>
+        /// </code>
+        /// </example>
+        public IYarnRunnerCommands Publish(Action<YarnPublishSettings> publishSettings = null)
+        {
+            var settings = new YarnPublishSettings();
+            publishSettings?.Invoke(settings);
+            var args = GetYarnPublishArguments(settings);
+
+            Run(settings, args);
+            return this;
+        }
+
+        private static ProcessArgumentBuilder GetYarnPublishArguments(YarnPublishSettings settings)
         {
             var args = new ProcessArgumentBuilder();
             settings?.Evaluate(args);
