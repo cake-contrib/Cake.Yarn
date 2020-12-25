@@ -1,4 +1,7 @@
-﻿namespace Cake.Yarn
+﻿using Cake.Core;
+using Cake.Core.IO;
+
+namespace Cake.Yarn
 {
     public class YarnPublishSettings : YarnRunnerSettings
     {
@@ -7,6 +10,19 @@
 
         public YarnPublishSettings() : base("publish")
         {
+        }
+
+        protected override void EvaluateCore(ProcessArgumentBuilder args)
+        {
+            if (!string.IsNullOrEmpty(_newVersion))
+            {
+                args.Append($"--new-version {_newVersion}");
+            }
+
+            if (!string.IsNullOrEmpty(_tag))
+            {
+                args.Append($"--tag {_tag}");
+            }
         }
 
         public YarnPublishSettings NewVersion(int major, int minor, int patch)
