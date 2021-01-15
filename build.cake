@@ -1,13 +1,13 @@
 /*
  * Load additional cake addins
  */
-#addin Cake.Git&version=0.17.0
+#addin Cake.Git&version=0.22.0
 
 /*
  * Load additional tools
  */
-#tool xunit.runner.console&version=2.3.1
-#tool GitVersion.CommandLine&version=3.6.5
+#tool xunit.runner.console&version=2.4.1
+#tool GitVersion.CommandLine&version=5.6.3
 
 /*
  * Commandline argument handling
