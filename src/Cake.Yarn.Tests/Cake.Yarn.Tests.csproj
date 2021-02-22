@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Testing" Version="0.38.5" />
+    <PackageReference Include="Cake.Testing" Version="1.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
     <PackageReference Include="Shouldly" Version="4.0.3" />
     <PackageReference Include="xunit" Version="2.4.1" />
