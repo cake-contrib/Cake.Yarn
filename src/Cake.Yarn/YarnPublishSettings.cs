@@ -48,6 +48,15 @@ namespace Cake.Yarn
             return this;
         }
 
+        /// <summary>Applies the --new-version parameter.</summary>
+        /// <param name="version">The version</param>
+        /// <returns></returns>
+        public YarnPublishSettings NewVersion(string version)
+        {
+            _newVersion = version;
+            return this;
+        }
+
         /// <summary>
         /// Applies the --tag parameter
         /// </summary>
