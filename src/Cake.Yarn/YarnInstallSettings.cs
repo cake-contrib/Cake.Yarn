@@ -52,6 +52,11 @@ namespace Cake.Yarn
                 args.Append("--frozen-lockfile");
             }
 
+            if (CheckFiles)
+            {
+                args.Append("--check-files");
+            }
+
             if (OfflineInstall)
             {
                 args.Append("--offline");
@@ -115,6 +120,16 @@ namespace Cake.Yarn
         }
 
         /// <summary>
+        /// Applies the --check-files parameter
+        /// </summary>
+        /// <param name="enabled"><c>true</c> to apply the parameter</param>
+        public YarnInstallSettings WithCheckFiles(bool enabled = true)
+        {
+            CheckFiles = enabled;
+            return this;
+        }
+
+        /// <summary>
         /// Applies the --offline parameter
         /// </summary>
         /// <param name="enabled"><c>true</c> to apply the parameter</param>
@@ -158,6 +173,11 @@ namespace Cake.Yarn
         /// --frozen-lockfile
         /// </summary>
         public bool FrozenLockfile { get; internal set; }
+        
+        /// <summary>
+        /// --check-files
+        /// </summary>
+        public bool CheckFiles { get; internal set; }
 
         /// <summary>
         /// --offline

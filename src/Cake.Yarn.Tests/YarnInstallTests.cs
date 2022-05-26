@@ -71,6 +71,16 @@ namespace Cake.Yarn.Tests
 
             result.Args.ShouldBe("install --frozen-lockfile");
         }
+        
+        [Fact]
+        public void Install_Settings_CheckFiles_Should_Use_Correct_Argument_Provided_In_YarnInstallSettings()
+        {
+            _fixture.InstallSettings = s => s.WithCheckFiles();
+
+            var result = _fixture.Run();
+
+            result.Args.ShouldBe("install --check-files");
+        }
 
         [Fact]
         public void Install_Settings_OfflineInstall_Should_Use_Correct_Argument_Provided_In_YarnInstallSettings()
