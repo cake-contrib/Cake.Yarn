@@ -8,12 +8,17 @@
     <Authors>Maxim Milovanov</Authors>
     <PackageLicenseUrl>https://github.com/MilovanovM/cake-yarn/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/MilovanovM/cake-yarn</PackageProjectUrl>
-    <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</PackageIconUrl>
+    <PackageIcon>images\icon.png</PackageIcon>
+    <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/addin/cake-contrib-addin-medium.png</PackageIconUrl>
     <PackageTags>cake;yarn;cake-addin;cake-build;addin;script;build;cake-contrib</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Cake.Core" Version="2.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\asset\cake-yarn-nuget.png" Pack="true" Visible="false" PackagePath="images\icon.png" />
   </ItemGroup>
 
 </Project>
