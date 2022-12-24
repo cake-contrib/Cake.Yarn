@@ -9,7 +9,7 @@
     <PackageLicenseUrl>https://github.com/MilovanovM/cake-yarn/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/MilovanovM/cake-yarn</PackageProjectUrl>
     <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</PackageIconUrl>
-    <PackageTags>Cake;Script;Build;Yarn</PackageTags>
+    <PackageTags>cake;yarn;cake-addin;cake-build;addin;script;build;cake-contrib</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
