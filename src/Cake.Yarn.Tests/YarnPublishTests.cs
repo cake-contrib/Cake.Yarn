@@ -37,6 +37,18 @@ namespace Cake.Yarn.Tests
         }
 
         [Fact]
+        public void New_Version_Option_Should_Pass_Through_String()
+        {
+            const string version = "2016.9.1-rc1";
+
+            _fixture.PublishSettings = s => s.NewVersion(version);
+
+            var result = _fixture.Run();
+
+            result.Args.ShouldBe($"publish --new-version {version}");
+        }
+
+        [Fact]
         public void Tag_Option_Should_Use_Tag_Argument()
         {
             const string tag = "beta";

@@ -44,5 +44,12 @@ namespace Cake.Yarn
         /// <param name="auditSettings">options when running 'yarn audit'</param>
         /// <returns></returns>
         IYarnRunnerCommands Audit(Action<YarnAuditSettings> auditSettings = null);
+
+        /// <summary>
+        /// execute 'yarn publish' with options
+        /// </summary>
+        /// <param name="publishSettings">options when running 'yarn publish'</param>
+        /// <returns></returns>
+        IYarnRunnerCommands Publish(Action<YarnPublishSettings> publishSettings = null);
     }
 }
